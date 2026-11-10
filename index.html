@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070605">
+<title>Happy Birthday, Jayesh</title>
+<meta name="description" content="A story, made for Jayesh.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --accent:#ecd5a5; --bg1:#070605; --bg2:#1c1611;
+  --ink:#fbf4e6; --muted:rgba(245,234,214,.78); --line:rgba(236,213,165,.3);
+  --display:'Bodoni Moda','Playfair Display',Georgia,'Times New Roman',serif;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg1);overflow-x:hidden}
+
+/* ---------- fixed layers ---------- */
+#bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse 90% 70% at 50% 105%,var(--bg2),var(--bg1) 72%)}
+#bg::after{content:"";position:absolute;inset:0;background:url(marble.jpg) center/cover;mix-blend-mode:screen;opacity:.5}
+#shine{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(115deg,transparent 42%,rgba(255,232,180,.07) 50%,transparent 58%);background-size:260% 100%;animation:sweep 11s ease-in-out infinite}
+@keyframes sweep{0%{background-position:130% 0}100%{background-position:-30% 0}}
+#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:-2;display:block}
+#vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(3,2,8,.7) 100%)}
+#grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.no3d #webgl{display:none}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;align-content:center;gap:1.2rem;background:var(--bg1);transition:opacity .9s ease,visibility .9s ease}
+#loader i{display:block;width:120px;height:1px;background:rgba(255,255,255,.15);position:relative;overflow:hidden}
+#loader i::after{content:"";position:absolute;inset:0;background:var(--accent);transform:translateX(-100%);animation:load 1.4s ease-in-out infinite}
+#loader span{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--muted)}
+.loaded #loader{opacity:0;visibility:hidden}
+@keyframes load{to{transform:translateX(100%)}}
+
+/* ---------- sections ---------- */
+main>[data-i]{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:0 8vw 0 7vw}
+
+.hero{flex-direction:column;justify-content:flex-end;text-align:center;gap:.9rem;padding-bottom:11vh!important}
+.hero .kicker{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,2.4vw,1.7rem);color:var(--muted);opacity:0;animation:fade 1.2s ease .3s forwards}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.7rem,9vw,7.4rem);line-height:.98;letter-spacing:-.02em;color:#f6e6bf;text-shadow:0 0 80px color-mix(in srgb,var(--accent) 50%,transparent)}
+.hero h1 .w{display:inline-block;white-space:nowrap}
+.hero h1 .l{display:inline-block;opacity:0;transform:translateY(80%);animation:rise 1.1s cubic-bezier(.16,.84,.24,1) forwards;animation-delay:calc(var(--i) * 50ms + .7s)}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero .name{font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,3.6vw,2.4rem);letter-spacing:.34em;text-indent:.34em;color:var(--accent);opacity:0;animation:fade 1.2s ease 1.9s forwards}
+.hero .cdwrap{margin-top:.8rem;opacity:0;animation:fade 1.2s ease 2.3s forwards}
+@keyframes fade{to{opacity:1}}
+.cue{display:grid;justify-items:center;gap:.6rem;margin-top:1.4rem;font-size:.85rem;color:var(--muted);opacity:0;animation:fade 1s ease 3s forwards}
+.cue i{width:1px;height:42px;background:linear-gradient(var(--accent),transparent);animation:drip 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* countdown */
+.cd{display:flex;gap:clamp(1rem,3.2vw,2.4rem);justify-content:center}
+.cd div{display:grid;justify-items:center;min-width:3ch}
+.cd b{font-family:var(--display);font-weight:600;font-size:clamp(1.9rem,5vw,3.4rem);font-variant-numeric:tabular-nums;line-height:1}
+.cd span{font-size:.78rem;color:var(--muted);margin-top:.45rem}
+.cd-note{color:var(--accent);font-size:.98rem;margin-top:.9rem;text-align:center}
+
+/* ornament */
+.orn{position:relative;display:block;width:150px;height:1px;margin:.3rem auto;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.orn::after{content:"";position:absolute;left:50%;top:-3px;width:7px;height:7px;background:var(--accent);transform:translateX(-50%) rotate(45deg)}
+
+/* chapters */
+.chapter.left{justify-content:flex-start}
+.chapter.right{justify-content:flex-end}
+.block{position:relative;width:min(440px,100%);will-change:opacity,transform}
+.block::before{content:"";position:absolute;inset:-5rem -4rem;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(3,2,8,.66),transparent)}
+.numeral{font-family:var(--display);font-weight:700;font-size:clamp(4.2rem,12vw,9rem);line-height:.85;letter-spacing:-.045em;font-weight:500;color:color-mix(in srgb,var(--accent) 13%,transparent);-webkit-text-stroke:1px color-mix(in srgb,var(--accent) 65%,transparent)}
+.block h2{font-family:var(--display);font-weight:600;font-size:clamp(1.55rem,3vw,2.2rem);line-height:1.12;letter-spacing:-.015em;margin:1.1rem 0 .8rem}
+.block p{color:var(--muted);line-height:1.75;font-weight:300;font-size:1.02rem;max-width:42ch}
+.fb{display:none}
+.no3d .fb,.photofail .fb{display:flex;gap:.6rem;margin-top:1.2rem}
+.fb img{width:48%;max-height:240px;object-fit:cover;border-radius:3px}
+
+/* timeline + progress */
+#timeline{position:fixed;right:clamp(.8rem,2vw,1.6rem);top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:11px;list-style:none}
+#timeline::before{content:"";position:absolute;right:3px;top:4px;bottom:4px;width:1px;background:var(--line)}
+#timeline button{all:unset;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:flex-end;gap:.7rem;font-size:.78rem;color:var(--muted)}
+#timeline button span{opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s;white-space:nowrap}
+#timeline button:hover span,#timeline button:focus-visible span,#timeline li.on button span{opacity:1;transform:none}
+#timeline i{width:7px;height:7px;border-radius:50%;background:#07060d;border:1px solid rgba(255,255,255,.6);transition:all .3s}
+#timeline li.on i{background:var(--accent);border-color:var(--accent);box-shadow:0 0 14px var(--accent);transform:scale(1.5)}
+#timeline button:focus-visible i{outline:2px solid #fff;outline-offset:3px}
+#hud{position:fixed;left:clamp(1rem,2.4vw,2rem);bottom:clamp(1rem,2.4vw,2rem);z-index:20;display:flex;align-items:baseline;gap:.5rem;font-family:var(--display);opacity:0;pointer-events:none}
+#hud b{font-size:1.7rem;font-weight:600;line-height:1}
+#hud span{color:var(--muted);font-size:.9rem}
+
+/* finale */
+.finale{flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:12vh 6vw 8vh!important}
+.finale h2{font-family:var(--display);font-weight:700;font-size:clamp(2.3rem,7vw,5.4rem);line-height:1;letter-spacing:-.035em;text-shadow:0 0 70px color-mix(in srgb,var(--accent) 45%,transparent)}
+.finale .lead{font-family:var(--serif);font-style:italic;font-size:clamp(1.15rem,2.3vw,1.6rem);color:var(--muted);max-width:34ch;margin:.9rem auto 1.4rem;line-height:1.45}
+.f-bottom{display:grid;justify-items:center;gap:.9rem}
+.hint{color:var(--muted);font-size:.9rem;font-weight:300}
+.wed{color:var(--accent);font-size:.95rem}
+.btn{display:inline-block;cursor:pointer;border:0;border-radius:999px;padding:1.05rem 2.5rem;font:600 .98rem var(--sans);letter-spacing:.02em;text-decoration:none;color:#14080d;
+  background:linear-gradient(120deg,#fff0d6,var(--accent));box-shadow:0 14px 60px -14px var(--accent);transition:transform .25s ease,box-shadow .25s ease,opacity .25s}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 18px 70px -10px var(--accent)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.btn:disabled{cursor:not-allowed;opacity:.55;background:rgba(255,255,255,.1);color:var(--ink);box-shadow:0 0 0 1px var(--line) inset}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:0 0 0 1px var(--line) inset}
+
+/* letter */
+.wishes{position:relative;padding:22vh 7vw 7vh;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--bg1) 95%,transparent) 26%,var(--bg1));text-align:center}
+.wishes h3{font-family:var(--display);font-weight:700;font-size:clamp(2rem,5vw,3.6rem);line-height:1.05;letter-spacing:-.03em;max-width:16ch;margin:0 auto}
+.letter{max-width:700px;margin:3.4rem auto 0;padding:clamp(1.8rem,4.5vw,3.4rem);text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.035);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.letter p{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.5rem);line-height:1.6;color:var(--ink);margin-bottom:1.15rem}
+.letter .sig{font-style:italic;color:var(--accent);margin:1.8rem 0 0}
+.wishes h4{font-family:var(--display);font-weight:600;font-size:1.4rem;margin:5rem 0 0}
+.wishes .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2.4rem;max-width:1000px;margin:2.4rem auto 0;text-align:left}
+.note{border-top:1px solid var(--line);padding-top:1.2rem}
+.note p{font-family:var(--serif);font-size:1.3rem;line-height:1.5}
+.note small{display:block;margin-top:1rem;color:var(--accent);font-size:.88rem;font-weight:500}
+.closing{font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,3.4vw,2.4rem);margin:6rem auto 0;max-width:24ch;line-height:1.3}
+.wishes .actions{margin-top:3rem}
+.wishes footer{margin-top:4rem;color:var(--muted);font-size:.85rem;font-weight:300}
+
+/* incoming-call gate */
+html.gated,html.gated body{overflow:hidden}
+html:not(.go) .hero *{animation-play-state:paused!important}
+#gate{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;text-align:center;padding:2rem;
+  background:radial-gradient(ellipse at 50% 35%,var(--bg2),var(--bg1) 70%);transition:opacity 1s ease,visibility 1s ease,transform 1s ease}
+#gate.gone{opacity:0;visibility:hidden;transform:scale(1.06)}
+.g-ring{position:relative;width:150px;height:150px;display:grid;place-items:center;margin-bottom:1.2rem}
+.g-ring i{position:absolute;inset:0;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:ripple 2.6s ease-out infinite}
+.g-ring i:nth-child(2){animation-delay:.85s}
+.g-ring i:nth-child(3){animation-delay:1.7s}
+@keyframes ripple{0%{transform:scale(.8);opacity:.7}100%{transform:scale(2.3);opacity:0}}
+.g-av{width:128px;height:128px;border-radius:50%;overflow:hidden;border:2px solid var(--accent);display:grid;place-items:center;font:600 2.6rem var(--display);color:#14080d;background:linear-gradient(135deg,#fff0d6,var(--accent));box-shadow:0 0 60px -6px var(--accent)}
+.g-av img{width:100%;height:100%;object-fit:cover;display:block}
+.g-name{font-family:var(--display);font-weight:700;font-size:clamp(2rem,6vw,3rem);letter-spacing:-.02em}
+.g-sub{color:var(--muted)}
+.g-note{font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--accent);margin-top:.6rem;max-width:26ch;line-height:1.35}
+.g-btns{display:flex;gap:3.2rem;margin-top:3rem}
+.g-btn{width:72px;height:72px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;color:#fff;transition:transform .2s}
+.g-btn:hover{transform:scale(1.08)}
+.g-btn:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.g-btn svg{width:30px;height:30px;fill:currentColor}
+.g-btn.acc{background:#2fbf71;animation:ring 1.8s ease-in-out infinite}
+.g-btn.dec{background:#e5484d}
+.g-btn.dec svg{transform:rotate(135deg)}
+.g-btn.nope{animation:nope .5s ease}
+@keyframes ring{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-14deg)}20%{transform:rotate(14deg)}30%{transform:rotate(-10deg)}40%{transform:rotate(10deg)}50%{transform:rotate(0)}}
+@keyframes nope{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.g-hint{color:var(--muted);font-size:.9rem;margin-top:.5rem;min-height:1.4em}
+
+/* home quote + letter reveal */
+.block .quote{font-family:var(--serif);font-style:italic;font-size:clamp(1.55rem,2.9vw,2.15rem);line-height:1.28;color:var(--ink);margin:0 0 1rem;max-width:18ch}
+.quote .r{visibility:hidden}
+.letter p{opacity:0;transform:translateY(14px);transition:opacity 1.3s ease,transform 1.3s ease}
+.letter p.in{opacity:1;transform:none}
+.letter .pull{color:var(--accent);font-style:italic;font-size:clamp(1.5rem,2.8vw,1.9rem);border-left:1px solid var(--accent);padding-left:1.1rem}
+
+/* open-when envelopes */
+.whenSub{color:var(--muted);margin-top:.6rem}
+.when{max-width:1000px;margin:2.4rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.6rem;text-align:left}
+.env{position:relative;min-height:330px;perspective:1100px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.env:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.env .in{position:absolute;inset:0;transition:transform 1s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.env.open .in{transform:rotateY(180deg)}
+.env .f,.env .b{position:absolute;inset:0;border-radius:6px;padding:1.5rem;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.env .f{display:grid;align-content:end;gap:.3rem;overflow:hidden;color:#3b2a22;background:linear-gradient(160deg,#f6e7d5,#e3c9aa);box-shadow:0 26px 50px -22px rgba(0,0,0,.7)}
+.env .f::before{content:"";position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(165deg,#efdcc4,#d3b793);clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 6px 6px rgba(0,0,0,.25))}
+.env .seal{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ff8fa8,#a81c3b);box-shadow:0 8px 18px rgba(0,0,0,.4)}
+.env .seal svg{width:24px;height:24px;fill:#ffe3ea}
+.env.locked .seal{background:radial-gradient(circle at 35% 30%,#8a8f9c,#444955)}
+.env.locked .seal svg{fill:#e8ebf2}
+.env .lbl{position:relative;font-family:var(--display);font-weight:600;font-size:1.12rem;line-height:1.2}
+.env .sub{position:relative;font-size:.82rem;opacity:.7}
+.env .b{transform:rotateY(180deg);overflow:auto;color:#3b2a22;background:linear-gradient(160deg,#fffaf0,#f3e6d0);box-shadow:0 26px 50px -22px rgba(0,0,0,.7)}
+.env .b small{display:block;font-style:italic;color:#9a5a2c;margin-bottom:.7rem;font-size:.9rem}
+.env .b p{font-family:var(--serif);font-size:1.22rem;line-height:1.45}
+.env.nope{animation:nope .5s ease}
+.f-top h2,.f-top .lead{text-shadow:0 2px 26px rgba(0,0,0,.9)}
+
+/* music */
+#music{position:fixed;right:clamp(.8rem,2vw,1.5rem);bottom:clamp(.8rem,2vw,1.5rem);z-index:30;width:46px;height:46px;border-radius:50%;cursor:pointer;color:var(--ink);
+  background:rgba(255,255,255,.06);border:1px solid var(--line);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:grid;place-items:center}
+#music[hidden]{display:none}
+#music:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#music .bars{display:flex;gap:3px;align-items:flex-end;height:16px}
+#music .bars i{width:2px;height:30%;background:currentColor}
+#music.on .bars i{animation:eq .9s ease-in-out infinite}
+#music.on .bars i:nth-child(2){animation-delay:.2s}
+#music.on .bars i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+
+@media (max-width:800px){
+  #timeline,#hud{display:none}
+  main>[data-i]{padding:0 6vw 5vh;align-items:flex-end}
+  .chapter.left,.chapter.right{justify-content:center}
+  .hero{align-items:center;padding-bottom:9vh!important}
+  .numeral{font-size:clamp(3.2rem,16vw,4.8rem)}
+  .block h2{margin:.7rem 0 .5rem}
+  .block::before{inset:-3rem -2rem}
+  .block p{font-size:.95rem;line-height:1.6}
+  .finale{padding:9vh 6vw 6vh!important}
+  .cd{gap:1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+
+<body>
+<div id="bg"></div>
+<canvas id="webgl" aria-hidden="true"></canvas>
+<div id="vignette"></div>
+<div id="shine"></div>
+<div id="grain"></div>
+
+<div id="loader"><i></i><span>Made for you</span></div>
+
+<ul id="timeline" aria-label="Chapters"></ul>
+<div id="hud" aria-hidden="true"><b id="hudN">01</b><span id="hudT">/ 12</span></div>
+<button id="music" aria-label="Play or pause music" hidden><span class="bars"><i></i><i></i><i></i></span></button>
+
+<main id="story"></main>
+<section class="wishes" id="wishes" hidden></section>
+
+
+<script>window.CALLER_PHOTO="caller.jpg";</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+'use strict';
+
+/* =====================================================================
+   1. EDIT THIS PART  -  every word on the site lives here
+   ---------------------------------------------------------------------
+   - photos.js holds the 18 photos (in order). Chapters point to them by
+     number: photos: [0, 1] means the 1st and 2nd photo.
+   - {name} is replaced by CONFIG.name everywhere.
+   - Keep 12 chapters. You may leave "photos" empty for a words-only chapter.
+   ===================================================================== */
+const CONFIG = {
+  name: "Jayesh",
+  theme: "noir",                                // luxury look: "noir" (black marble + gold), "emerald", "burgundy" or "midnight"
+  music: "",                                   // optional, e.g. "music/our-song.mp3"
+  birthday: { month: 11, day: 12, firstYear: 2026 },   // candles unlock on this date
+  wedding:  { year: 2027, month: 1, day: 21, label: "21 January 2027" },
+  ratios: [0.5625, 0.5625, 0.5625, 0.5625, 0.5625, 0.5625, 0.5625, 1.5, 0.5625, 1.7778, 0.5625, 0.5625, 0.5625, 0.5625, 0.695, 0.5625, 0.5625, 0.8],                          // width/height of each photo (do not edit)
+
+  gate: {
+    caller: "Wifey",
+    sub: "is calling you\u2026",
+    note: "This time, it is my turn to call you.",
+    hint: "Tap the green button to answer",
+    declineMsg: "You cannot decline me, Jayesh."
+  },
+
+  hero: {
+    kicker: "For Jayesh, with all my love",
+    cue: "Scroll to begin our story"
+  },
+
+  chapters: [
+    { short: "Yes", photos: [0, 1], title: "The day we said yes",
+      text: "Some answers arrive quietly. Ours came with shy smiles and gift bags that said \u201ctime to celebrate\u201d, because it was. We said yes to each other, and the world went calm and certain. That was the day a maybe became forever." },
+    { short: "Wrong turn", photos: [2], title: "The best wrong turn",
+      text: "You came to pick me up and the plan was Lonavala. We ended up in Mumbai, by accident, with songs playing that were almost our taste and not quite. We were still learning each other, one song at a time, and I would have taken any wrong road with you." },
+    { short: "Until morning", photos: [3], title: "Until the sun came up",
+      text: "A whole day, a whole night, and we got home as the morning arrived. Then the rain, and your car, which you love almost as much as you love me (almost), and a kiss I still replay. Somewhere in that night I stopped wondering and started knowing." },
+    { short: "The rings", photos: [4, 5], title: "Rings, and the truest thing I said",
+      text: "We went to choose our engagement rings. My hand in yours, and in the middle of everything I told you I really love you. It was the truest thing I had ever said out loud. Then a little mirror caught us laughing, and I wished I could keep that reflection forever." },
+    { short: "Henna", photos: [6], title: "Henna and happiness",
+      text: "Two days before the engagement. Henna drying on my hands, my head on your shoulder, you in yellow and smiling like you had already won. Nothing was missing from that room. Nothing at all." },
+    { short: "Engaged", photos: [7, 16, 8], title: "Forever, formally",
+      text: "Then you slipped the ring onto my finger and the whole room blurred into gold. In the days that followed I could not stop smiling: a swing in the afternoon, a selfie in the evening glow, a thousand small proofs that this was real." },
+    { short: "3 a.m.", photos: [9, 10], title: "Hands that found each other",
+      text: "Our rings caught the light and our fingers reached, almost touching, the way they always seem to. Then, around three or four in the morning with nowhere to be, we stood in front of a mirror and simply stayed. Some of our best hours are not on any clock." },
+    { short: "Ordinary days", photos: [15, 11], title: "Ordinary days, perfect days",
+      text: "A hallway, a suitcase, a bag of groceries, a pink dress and a long brunch beneath a white dome. None of it was grand, and all of it was everything. With you, ordinary became the part I will remember most." },
+    { short: "Last night", photos: [12], title: "The second-to-last night",
+      text: "Two days before I had to leave, I held on to you as if time might listen. It did not. But I carried that night with me: your warmth, your laugh, the way you say my name. I still do." },
+    { short: "Until next time", photos: [14, 13], title: "Not goodbye. Until next time.",
+      text: "At the airport I could not show you how I felt. Inside I was coming apart. I wanted to turn around, stay in your arms and not let go until we met again. So I held on one second longer, and carried you with me across every mile." },
+    { short: "Home", photos: [], title: "Home",
+      quote: "When you call me, it feels like home. It feels like home with you.",
+      text: "You say Babu like it is the softest word in the world, and you call every morning just to see my face. I have never once had to wonder where I stand. I do not know how one person can be this lucky, but I am, and I know it every single day." },
+    { short: "After the 21st", photos: [17], title: "After the 21st",
+      text: "You made this picture of us yourself, with a little help from AI, and I am completely obsessed. It is us after 21 January 2027: same hands, new names, one home. I look at it more than I will admit. I cannot wait to live inside it with you." }
+  ],
+
+  finale: {
+    short: "Your wish",
+    title: "Make a wish",
+    text: "Close your eyes. Wish for anything. I will spend my life helping it come true.",
+    button: "Blow out the candles",
+    lockedButton: "Opens on {date}",
+    hint: "Take a breath. This one is for you.",
+    lockedHint: "Come back on your birthday. I will be waiting.",
+    afterTitle: "Happy Birthday, {name}",
+    afterText: "Eighteen moments, one heart. My wish is you, today and every day after.",
+    afterButton: "Read my letter"
+  },
+
+  openWhen: {
+    title: "Open when\u2026",
+    sub: "A letter for every kind of day. Tap an envelope.",
+    items: [
+      { label: "Open when you miss me", text: "Put your hand on your heart. That is me, holding on. Call me at any hour and I will answer. Distance is only a number, and I am counting every day until it reaches zero." },
+      { label: "Open when you cannot sleep", text: "Think of the rain, your car, and a road to Mumbai we never planned. Think of the swing, the henna, the mirror. Now breathe slowly. I am right here in every memory, and morning always comes." },
+      { label: "Open when you doubt yourself", text: "You are the man I said yes to. The man my family adores. The man who calls every morning just to see my face. You are so much more than you believe, and I believe in you enough for both of us." },
+      { label: "Open when you need a smile", text: "Say it out loud: Wifey. Now remember, on 21 January 2027 she is yours for life. Somewhere across the miles, I am smiling just because you exist." },
+      { label: "Open on your worst day", text: "Nothing needs fixing right now. Just come home to me, in a call, a message, a memory. I will carry the weight with you. You never have to carry anything alone again." },
+      { label: "Open on our wedding morning", unlock: { year: 2027, month: 1, day: 21 }, unlockLabel: "21 January 2027", text: "Today the countdown ends. I become Ritika Jayesh Ukey, and you become my husband. Thank you for waiting, for calling, for choosing me every single day. Take my hand. Let us go home." }
+    ]
+  },
+
+  letter: {
+    title: "A few words for you",
+    paragraphs: [
+      "My Jayesh,",
+      "Happy Birthday.",
+      "I tried to put us into a website, because nothing smaller could hold it. From the day we said yes, to the wrong turn that became our favourite road, to a ring counter where I finally told you how much I love you, every page of this story has you in it.",
+      "I do not know how you do it. You call me Babu like it is the most natural word in the world. You call every morning just to see my face. You adore me so loudly and so gently that I have never once had to wonder where I stand. You make me feel like the most special person alive, and I still cannot believe how lucky I am.",
+      "> When you call me, it feels like home. It feels like home with you.",
+      "So here is my promise, on your birthday and on every day after it: I will stay. Through every ordinary morning and every impossible distance, through the easy years and the hard ones, until my last breath. I will make you laugh, I will make you feel chosen, and I will do everything I can to make you happy.",
+      "From now on, your birthday is mine to celebrate too, and I will always make it feel like the biggest day of the year.",
+      "Mom, Dad, Akshu and Coco love you so much. We all do. You are already family, and on 21 January 2027 I get to make it official.",
+      "I cannot wait to become Ritika Jayesh Ukey."
+    ],
+    signature: "Forever yours, your Babu",
+    familyTitle: "From the people who love you",
+    notes: [
+      { from: "Mom and Dad", text: "You came into our lives and into our hearts. We love you so much, Jayesh. Happy Birthday, and welcome home." },
+      { from: "Akshu",       text: "Happy Birthday, Jayesh. You make this family better just by being in it. I love you so much." },
+      { from: "Coco",        text: "Happy Birthday, Jayesh. Sending you the biggest hug. We love you so much." }
+    ],
+    closing: "Until 21 January 2027, and every day after.",
+    replay: "Watch our story again",
+    footer: "Made with love, by Ritika"
+  }
+};
+
+/* =====================================================================
+   2. ENGINE  (no need to edit below this line)
+   ===================================================================== */
+const $ = (s, el) => (el || document).querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const fill = s => String(s).replace(/\{name\}/g, CONFIG.name);
+const sm = t => t * t * (3 - 2 * t);
+const clamp = (v, a, b) => Math.min(b === undefined ? 1 : b, Math.max(a === undefined ? 0 : a, v));
+const html = document.documentElement;
+const pad = n => String(n).padStart(2, '0');
+const NS = CONFIG.chapters.length + 2;                 // hero + chapters + finale
+const SRC = i => (window.PHOTO_DATA && window.PHOTO_DATA[i]) || ('photos/' + pad(i + 1) + '.jpg');
+const PREVIEW = /[?&]preview/.test(location.search);
+
+document.title = 'Happy Birthday, ' + CONFIG.name;
+
+/* ---------- build the page ---------- */
+const main = $('#story');
+const hl = (word, off) => '<span class="w">' + [...word].map((c, i) => '<span class="l" style="--i:' + (i + off) + '">' + c + '</span>').join('') + '</span>';
+const cdHTML = k => '<div class="cd" data-cd="' + k + '"><div><b data-u="d">00</b><span>days</span></div><div><b data-u="h">00</b><span>hours</span></div><div><b data-u="m">00</b><span>minutes</span></div><div><b data-u="s">00</b><span>seconds</span></div></div><p class="cd-note" data-note="' + k + '"></p>';
+
+main.insertAdjacentHTML('beforeend',
+  '<section class="hero" data-i="0" id="hero">' +
+    '<p class="kicker">' + esc(CONFIG.hero.kicker) + '</p>' +
+    '<h1 aria-label="Happy Birthday">' + hl('Happy', 0) + ' ' + hl('Birthday', 5) + '</h1>' +
+    '<p class="name">' + esc(CONFIG.name) + '</p><span class="orn"></span>' +
+    '<div class="cdwrap">' + cdHTML('hero') + '</div>' +
+    '<div class="cue"><i></i><span>' + esc(CONFIG.hero.cue) + '</span></div>' +
+  '</section>');
+
+CONFIG.chapters.forEach((c, idx) => {
+  const i = idx + 1, side = i % 2 ? 'left' : 'right';
+  main.insertAdjacentHTML('beforeend',
+    '<section class="chapter ' + side + '" data-i="' + i + '"><article class="block">' +
+      '<div class="numeral" aria-hidden="true">' + pad(i) + '</div>' +
+      '<h2>' + esc(c.title) + '</h2>' +
+      (c.quote ? '<p class="quote" data-q="' + esc(fill(c.quote)) + '"><span class="t"></span><span class="r">' + esc(fill(c.quote)) + '</span></p>' : '') +
+      '<p>' + esc(fill(c.text)) + '</p>' +
+    '</article></section>');
+});
+
+const F = CONFIG.finale;
+main.insertAdjacentHTML('beforeend',
+  '<section class="finale" data-i="' + (NS - 1) + '" id="finale">' +
+    '<div class="f-top"><h2 id="fTitle">' + esc(fill(F.title)) + '</h2><p class="lead" id="fText">' + esc(fill(F.text)) + '</p>' + cdHTML('finale') + '</div>' +
+    '<div class="f-bottom" id="fBottom"><button class="btn" id="blow"></button><p class="hint" id="fHint"></p><p class="wed" id="wed"></p></div>' +
+  '</section>');
+
+const L = CONFIG.letter;
+const OW = CONFIG.openWhen;
+const lockIco = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h-1V6a5 5 0 00-10 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V10a2 2 0 00-2-2zm-6 9a2 2 0 110-4 2 2 0 010 4zm3.1-9H8.9V6a3.1 3.1 0 016.2 0v2z"/></svg>';
+const heartIco = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.6 1.1 4.6 2.7h2C14 6.1 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>';
+function openWhenHTML() {
+  return '<h4>' + esc(OW.title) + '</h4><p class="whenSub">' + esc(OW.sub) + '</p><div class="when">' + OW.items.map(it => {
+    const lk = it.unlock ? +new Date(it.unlock.year, it.unlock.month - 1, it.unlock.day) : 0, locked = lk && !PREVIEW && Date.now() < lk;
+    return '<div class="env' + (locked ? ' locked' : '') + '" role="button" tabindex="0" aria-label="' + esc(it.label) + '"' + (lk ? ' data-unlock="' + lk + '"' : '') + '><div class="in"><div class="f"><span class="seal">' + (locked ? lockIco : heartIco) + '</span><span class="lbl">' + esc(it.label) + '</span><span class="sub">' + (locked ? 'Opens on ' + esc(it.unlockLabel || '') : 'Tap to open') + '</span></div><div class="b"><small>' + esc(it.label) + '</small><p>' + esc(fill(it.text)) + '</p></div></div></div>';
+  }).join('') + '</div>';
+}
+$('#wishes').innerHTML =
+  '<h3>' + esc(L.title) + '</h3>' +
+  '<article class="letter">' + L.paragraphs.map(p => p.indexOf('> ') === 0 ? '<p class="pull">' + esc(fill(p.slice(2))) + '</p>' : '<p>' + esc(fill(p)) + '</p>').join('') + '<p class="sig">' + esc(L.signature) + '</p></article>' + openWhenHTML() +
+  '<h4>' + esc(L.familyTitle) + '</h4><div class="grid">' +
+  L.notes.map(n => '<blockquote class="note"><p>' + esc(fill(n.text)) + '</p><small>' + esc(n.from) + '</small></blockquote>').join('') + '</div>' +
+  '<p class="closing">' + esc(L.closing) + '</p>' +
+  '<div class="actions"><button class="btn ghost" id="replay">' + esc(L.replay) + '</button></div>' +
+  '<footer>' + esc(L.footer) + '</footer>';
+
+document.querySelectorAll('.env').forEach(el => {
+  const act = () => {
+    const lk = +el.dataset.unlock || 0;
+    if (lk && !PREVIEW && Date.now() < lk) { el.classList.remove('nope'); void el.offsetWidth; el.classList.add('nope'); return; }
+    el.classList.toggle('open');
+  };
+  el.addEventListener('click', act);
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } });
+});
+$('#hudT').textContent = '/ ' + pad(CONFIG.chapters.length);
+
+
+/* ---------- the incoming call that opens the site ---------- */
+let startMusic = function () {};
+(function () {
+  const G = CONFIG.gate, ph = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.6 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.6 3.6a1 1 0 01-.25 1z"/></svg>';
+  document.body.insertAdjacentHTML('afterbegin',
+    '<div id="gate" role="dialog" aria-label="Incoming call"><div class="g-ring"><i></i><i></i><i></i><div class="g-av">' + (window.CALLER_PHOTO ? '<img src="' + window.CALLER_PHOTO + '" alt="' + esc(G.caller) + '">' : esc(G.caller.charAt(0))) + '</div></div>' +
+    '<p class="g-name">' + esc(G.caller) + '</p><p class="g-sub">' + esc(G.sub) + '</p><p class="g-note">' + esc(fill(G.note)) + '</p>' +
+    '<div class="g-btns"><button class="g-btn dec" id="gDec" aria-label="Decline">' + ph + '</button><button class="g-btn acc" id="gAcc" aria-label="Answer">' + ph + '</button></div>' +
+    '<p class="g-hint" id="gHint">' + esc(G.hint) + '</p></div>');
+  html.classList.add('gated');
+  let opened = false;
+  function open() {
+    if (opened) return; opened = true;
+    html.classList.remove('gated'); html.classList.add('go');
+    const g = $('#gate'); g.classList.add('gone'); setTimeout(function () { g.remove(); }, 1100);
+    startMusic();
+  }
+  $('#gAcc').addEventListener('click', open);
+  $('#gDec').addEventListener('click', function () {
+    this.classList.add('nope'); $('#gHint').textContent = fill(G.declineMsg); setTimeout(open, 1700);
+  });
+})();
+
+/* ---------- typewriter for the home line ---------- */
+const quotes = [...document.querySelectorAll('.quote')].map(el => ({ el: el, i: +el.closest('[data-i]').dataset.i, full: el.dataset.q, n: 0, on: false }));
+function typeQuote(q) {
+  if (q.on) return; q.on = true;
+  const t = $('.t', q.el), r = $('.r', q.el);
+  const id = setInterval(function () { q.n++; t.textContent = q.full.slice(0, q.n); r.textContent = q.full.slice(q.n); if (q.n >= q.full.length) clearInterval(id); }, 45);
+}
+
+/* ---------- letter appears paragraph by paragraph ---------- */
+function revealLetter() {
+  const ps = [...document.querySelectorAll('.letter p')];
+  if (!('IntersectionObserver' in window)) { ps.forEach(p => p.classList.add('in')); return; }
+  const io = new IntersectionObserver(function (es) { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.5 });
+  ps.forEach(p => io.observe(p));
+}
+
+/* ---------- sections, anchors, scroll progress ---------- */
+const sections = [...document.querySelectorAll('main > [data-i]')];
+const labels = ['Start'].concat(CONFIG.chapters.map(c => c.short), [F.short]);
+let anchors = [];
+
+const tl = $('#timeline');
+labels.forEach((l, i) => {
+  tl.insertAdjacentHTML('beforeend', '<li><button type="button" data-go="' + i + '" aria-label="Go to ' + esc(l) + '"><span>' + esc(l) + '</span><i></i></button></li>');
+});
+const tlItems = [...tl.children];
+tl.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  window.scrollTo({ top: anchors[+b.dataset.go], behavior: 'smooth' });
+});
+
+function measure() {
+  const vh = innerHeight;
+  const max = Math.max(0, html.scrollHeight - vh);
+  anchors = sections.map(s => s.offsetTop + s.offsetHeight / 2 - vh / 2);
+  anchors[0] = 0;
+  if ($('#wishes').hidden) anchors = anchors.map(a => Math.min(a, max));
+}
+function getF() {
+  const y = window.scrollY;
+  if (y <= anchors[0]) return 0;
+  for (let i = 0; i < anchors.length - 1; i++) {
+    if (y < anchors[i + 1]) return i + (y - anchors[i]) / Math.max(1, anchors[i + 1] - anchors[i]);
+  }
+  return anchors.length - 1;
+}
+
+/* ---------- palette per section (0 = hero ... last = finale) ---------- */
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const THEMES = {
+  noir:     { bg1: '#070605', bg2: ['#1c1611', '#2a1d12', '#241812', '#33220f'], accent: ['#ecd5a5', '#e9bfa0', '#efcf86', '#e6c07a', '#f2d99a'], star: 0xf3e2bd },
+  emerald:  { bg1: '#030b08', bg2: ['#0b2a20', '#0f3b2c', '#0c2f26', '#134a34'], accent: ['#e8cf9c', '#d8c58a', '#efd9a4', '#e6c27a', '#f0dca8'], star: 0xeadfb8 },
+  burgundy: { bg1: '#0a0306', bg2: ['#2b0a16', '#3e0f20', '#35101c', '#4e1426'], accent: ['#f0d2a6', '#e8b4a0', '#f2cf93', '#e9bd8a', '#f4d9ae'], star: 0xf3d8c8 },
+  midnight: { bg1: '#05040a', bg2: ['#2a0f2e','#3a1230','#3a1a22','#2a1550','#40220f','#4a2410','#4a1233','#241a55','#3a1a30','#4a1226','#102a4a','#3a1236','#4a3412','#5a3d10'],
+              accent: ['#ffb3c6','#ff9fb8','#ffc09f','#e6a6ff','#ffd08a','#ffb36b','#ffd6a0','#b9a6ff','#ffc09f','#ff8fa3','#9fc4ff','#ff9fb8','#ffd98a','#ffd98a'], star: 0xffd6e0 }
+};
+const TH = THEMES[CONFIG.theme] || THEMES.noir;
+const ramp = (stops, n) => Array.from({ length: n }, (_, i) => {
+  const p = i / (n - 1) * (stops.length - 1), k = Math.floor(p), k2 = Math.min(k + 1, stops.length - 1), t = p - k, ca = hex(stops[k]), cb = hex(stops[k2]);
+  return '#' + ca.map((v, j) => Math.round(v + (cb[j] - v) * t).toString(16).padStart(2, '0')).join('');
+});
+const RAW = {
+  bg1:    Array(NS).fill(TH.bg1),
+  bg2:    TH.bg2.length === NS ? TH.bg2 : ramp(TH.bg2, NS),
+  accent: TH.accent.length === NS ? TH.accent : ramp(TH.accent, NS)
+};
+const PAL = {}; for (const k in RAW) PAL[k] = RAW[k].map(hex);
+function M(k, f) {
+  const a = PAL[k], i = Math.min(Math.floor(f), a.length - 2), t = sm(clamp(f - i));
+  return a[i].map((v, j) => v + (a[i + 1][j] - v) * t);
+}
+const css = c => 'rgb(' + c.map(v => Math.round(v)).join(',') + ')';
+html.style.setProperty('--accent', css(M('accent', 0))); html.style.setProperty('--bg1', css(M('bg1', 0))); html.style.setProperty('--bg2', css(M('bg2', 0)));
+function S(arr, f) {
+  const i = Math.min(Math.floor(f), arr.length - 2), t = sm(clamp(f - i));
+  return arr[i] + (arr[i + 1] - arr[i]) * t;
+}
+/* camera path: a gentle weave forward through space, one stop per section */
+const CX = [], CY = [], CZ = [];
+for (let i = 0; i < NS; i++) { CX.push(Math.sin(i * 1.3) * 0.8); CY.push(1.45 + Math.cos(i * 0.9) * 0.2); CZ.push(-14 * i); }
+
+/* ---------- UI driven by scroll ---------- */
+const blocks = [...document.querySelectorAll('.chapter')].map(s => ({ i: +s.dataset.i, el: $('.block', s) }));
+const heroEl = $('#hero'), hud = $('#hud'), fTop = $('.f-top'), fBottom = $('#fBottom');
+let lastUI = -9, lastIdx = -1, isMobile = innerWidth < 800;
+
+function applyUI(f) {
+  if (Math.abs(f - lastUI) < 0.0004) return;
+  lastUI = f;
+  const st = html.style;
+  st.setProperty('--accent', css(M('accent', f)));
+  st.setProperty('--bg1', css(M('bg1', f)));
+  st.setProperty('--bg2', css(M('bg2', f)));
+  blocks.forEach(c => {
+    const o = clamp(1 - (Math.abs(f - c.i) - 0.28) * 3.2);
+    c.el.style.opacity = o.toFixed(3);
+    c.el.style.transform = 'translateY(' + ((1 - o) * 30).toFixed(1) + 'px)';
+    c.el.style.pointerEvents = o < 0.1 ? 'none' : '';
+  });
+  heroEl.style.opacity = clamp(1 - f * 2.2).toFixed(3);
+  quotes.forEach(q => { if (Math.abs(f - q.i) < 0.4) typeQuote(q); });
+  const fo = clamp((f - (NS - 1.75)) * 3).toFixed(3);
+  fTop.style.opacity = fo; fBottom.style.opacity = fo;
+  hud.style.opacity = clamp(Math.min((f - 0.5) * 3, (CONFIG.chapters.length + 0.5 - f) * 3)).toFixed(3);
+  const idx = Math.round(f);
+  if (idx !== lastIdx) {
+    lastIdx = idx;
+    tlItems.forEach((li, i) => li.classList.toggle('on', i === idx));
+    if (idx >= 1 && idx <= CONFIG.chapters.length) $('#hudN').textContent = pad(idx);
+  }
+}
+
+/* ---------- countdowns ---------- */
+let blown = false, wasUnlocked = null, fire = function () {};
+const BD = CONFIG.birthday, WD = CONFIG.wedding;
+const unlockAt = new Date(BD.firstYear, BD.month - 1, BD.day);
+const unlockLabel = unlockAt.toLocaleDateString(undefined, { day: 'numeric', month: 'long' });
+
+function tick() {
+  const now = new Date(), y = now.getFullYear(), DAY = 864e5;
+  let target = new Date(y, BD.month - 1, BD.day), today = false;
+  if (now >= target && now - target < DAY) today = true;
+  else if (now >= target) target = new Date(y + 1, BD.month - 1, BD.day);
+  const diff = today ? 0 : Math.max(0, target - now);
+  const v = { d: Math.floor(diff / DAY), h: Math.floor(diff / 36e5) % 24, m: Math.floor(diff / 6e4) % 60, s: Math.floor(diff / 1e3) % 60 };
+  document.querySelectorAll('.cd').forEach(cd => {
+    for (const u in v) { const b = $('[data-u="' + u + '"]', cd); const t = u === 'd' ? String(v.d).padStart(2, '0') : pad(v[u]); if (b.textContent !== t) b.textContent = t; }
+  });
+  const note = today ? 'Today is your day.' : 'until your birthday';
+  document.querySelectorAll('.cd-note').forEach(n => { n.textContent = note; });
+
+  const wd = Math.ceil((new Date(WD.year, WD.month - 1, WD.day) - now) / DAY);
+  $('#wed').textContent = wd > 0 ? (wd + (wd === 1 ? ' day' : ' days') + ' until I become Ritika Jayesh Ukey') : 'Married to my best friend, 21 January 2027';
+
+  const unlocked = PREVIEW || now >= unlockAt;
+  if (!blown) {
+    const b = $('#blow'); b.disabled = !unlocked;
+    b.textContent = unlocked ? F.button : F.lockedButton.replace('{date}', unlockLabel);
+    $('#fHint').textContent = unlocked ? F.hint : F.lockedHint;
+  }
+  if (wasUnlocked === false && unlocked) fire();
+  wasUnlocked = unlocked;
+}
+tick(); setInterval(tick, 1000);
+
+function blowCandles() {
+  if (blown || $('#blow').disabled) return; blown = true;
+  fire();
+  $('#fTitle').textContent = fill(F.afterTitle);
+  $('#fText').textContent = fill(F.afterText);
+  $('#fHint').textContent = '';
+  $('#blow').outerHTML = '<a class="btn" href="#wishes">' + esc(F.afterButton) + '</a>';
+  $('#wishes').hidden = false;
+  revealLetter();
+  measure();
+}
+$('#blow').addEventListener('click', blowCandles);
+$('#replay').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+if (CONFIG.music) {
+  const a = new Audio(CONFIG.music); a.loop = true; a.volume = 0.6;
+  const mb = $('#music'); mb.hidden = false;
+  startMusic = function () { a.play().catch(() => {}); mb.classList.add('on'); };
+  mb.addEventListener('click', () => {
+    if (a.paused) { a.play().catch(() => {}); mb.classList.add('on'); } else { a.pause(); mb.classList.remove('on'); }
+  });
+}
+
+/* =====================================================================
+   3. THE 3D WORLD: a flight through our story
+   ===================================================================== */
+let render3D = null, onResize3D = function () {};
+
+function init3D() {
+  const canvas = $('#webgl');
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(new THREE.Color(RAW.bg1[0]).getHex(), 0.026);
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 400);
+  const accCol = new THREE.Color('#ffb3c6');
+  const ADD = THREE.AdditiveBlending;
+
+  /* ---- helper textures ---- */
+  function glowTexture(stops) {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    stops.forEach(s => gr.addColorStop(s[0], s[1]));
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+    return new THREE.CanvasTexture(c);
+  }
+  const glowTex = glowTexture([[0, 'rgba(255,255,255,1)'], [0.3, 'rgba(255,255,255,.3)'], [1, 'rgba(255,255,255,0)']]);
+  const flameTex = glowTexture([[0, 'rgba(255,250,220,1)'], [0.25, 'rgba(255,200,100,.85)'], [0.6, 'rgba(255,120,40,.25)'], [1, 'rgba(255,90,20,0)']]);
+  const heartTex = (function () {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const g = c.getContext('2d'); g.shadowColor = '#fff'; g.shadowBlur = 5; g.fillStyle = '#fff';
+    g.beginPath(); g.moveTo(32, 54); g.bezierCurveTo(8, 38, 6, 16, 22, 14); g.bezierCurveTo(28, 13, 32, 18, 32, 22);
+    g.bezierCurveTo(32, 18, 36, 13, 42, 14); g.bezierCurveTo(58, 16, 56, 38, 32, 54); g.fill();
+    return new THREE.CanvasTexture(c);
+  })();
+
+  /* ---- studio environment for real reflections on gold and glass ---- */
+  (function () {
+    const env = new THREE.Scene();
+    env.add(new THREE.Mesh(new THREE.SphereGeometry(40, 32, 16), new THREE.ShaderMaterial({
+      side: THREE.BackSide,
+      vertexShader: 'varying vec3 vW; void main(){ vW = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+      fragmentShader: 'varying vec3 vW; void main(){ float h = normalize(vW).y; vec3 c = mix(vec3(.012,.01,.016), vec3(.16,.10,.14), smoothstep(-.35,.08,h)); c = mix(c, vec3(.03,.025,.05), smoothstep(.1,.9,h)); gl_FragColor = vec4(c,1.0); }'
+    })));
+    const panel = (w, h, r, g, b, x, y, z) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(r, g, b), side: THREE.DoubleSide }));
+      m.position.set(x, y, z); m.lookAt(0, 0, 0); env.add(m);
+    };
+    panel(9, 5, 9, 7.5, 6.5, -9, 6, 9);      // warm key
+    panel(2, 11, 9, 4, 5, 10, 3, -6);        // rose strip
+    panel(1.2, 9, 3, 4.5, 9, -10, 2, -7);    // blue kicker
+    panel(12, .8, 7, 6.5, 6.5, 0, 11, 0);    // overhead
+    panel(5, 2.5, 4, 3.5, 3.5, 8, 1.5, 8);   // fill
+    const pm = new THREE.PMREMGenerator(renderer);
+    scene.environment = pm.fromScene(env, 0.03).texture;
+    pm.dispose();
+  })();
+
+  /* ---- lights (they follow the camera) ---- */
+  scene.add(new THREE.HemisphereLight(0xffd6e0, 0x120a18, 0.35));
+  const key = new THREE.DirectionalLight(0xfff0e6, 1.6); scene.add(key, key.target);
+  const rim = new THREE.DirectionalLight(0xffffff, 2.2); scene.add(rim, rim.target);
+
+  /* ---- starfield along the whole journey ---- */
+  const SN = isMobile ? 1800 : 3600, sp = new Float32Array(SN * 3);
+  for (let i = 0; i < SN; i++) { sp[i * 3] = (Math.random() - 0.5) * 60; sp[i * 3 + 1] = -12 + Math.random() * 28; sp[i * 3 + 2] = 25 - Math.random() * (14 * NS + 60); }
+  const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+  const stars = new THREE.Points(sg, new THREE.PointsMaterial({ size: 0.09, map: glowTex, transparent: true, opacity: 0.8, depthWrite: false, blending: ADD, color: TH.star, fog: false }));
+  scene.add(stars);
+
+  /* ---- tiny hearts drifting up around the camera ---- */
+  const FH = isMobile ? 60 : 120, fpos = new Float32Array(FH * 3), fseed = new Float32Array(FH * 4);
+  for (let i = 0; i < FH; i++) {
+    fpos[i * 3] = (Math.random() - 0.5) * 18; fpos[i * 3 + 1] = (Math.random() - 0.5) * 12; fpos[i * 3 + 2] = 2 - Math.random() * 24;
+    fseed[i * 4] = Math.random(); fseed[i * 4 + 1] = 0.5 + Math.random() * 0.8; fseed[i * 4 + 2] = 0.15 + Math.random() * 0.25; fseed[i * 4 + 3] = 0.3 + Math.random() * 0.6;
+  }
+  const fg = new THREE.BufferGeometry();
+  fg.setAttribute('position', new THREE.BufferAttribute(fpos, 3)); fg.setAttribute('aSeed', new THREE.BufferAttribute(fseed, 4));
+  const floatM = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: ADD,
+    uniforms: { uTime: { value: 0 }, uMap: { value: heartTex }, uColor: { value: new THREE.Color() }, uPR: { value: renderer.getPixelRatio() } },
+    vertexShader: [
+      'attribute vec4 aSeed; uniform float uTime; uniform float uPR; varying float vA;',
+      'void main(){',
+      '  vec3 p = position;',
+      '  p.y = mod(p.y + uTime * aSeed.z + 6.0, 12.0) - 6.0;',
+      '  p.x += sin(uTime * aSeed.w + aSeed.x * 6.28) * 0.4;',
+      '  vec4 mv = modelViewMatrix * vec4(p, 1.0);',
+      '  gl_Position = projectionMatrix * mv;',
+      '  gl_PointSize = aSeed.y * 240.0 * uPR / -mv.z;',
+      '  vA = smoothstep(-6.0, -4.0, p.y) * smoothstep(6.0, 4.0, p.y) * smoothstep(0.8, 2.5, -mv.z) * smoothstep(26.0, 16.0, -mv.z);',
+      '}'
+    ].join('\n'),
+    fragmentShader: 'uniform sampler2D uMap; uniform vec3 uColor; varying float vA; void main(){ float a = texture2D(uMap, gl_PointCoord).a; gl_FragColor = vec4(uColor, a * vA * 0.75); }'
+  });
+  const floaters = new THREE.Points(fg, floatM); floaters.frustumCulled = false; scene.add(floaters);
+
+  /* ---- the path of light: our road, lit up as we travel ---- */
+  const rp = [];
+  for (let i = 0; i < NS; i++) rp.push(new THREE.Vector3(CX[i] + (i % 2 ? -0.6 : 0.6), CY[i] - 1.1, CZ[i] - 2.8));
+  const curve = new THREE.CatmullRomCurve3(rp, false, 'catmullrom', 0.5);
+  const tubeFaint = new THREE.TubeGeometry(curve, 700, 0.012, 6, false), tubeLit = tubeFaint.clone();
+  const faintM = new THREE.MeshBasicMaterial({ color: 0xffb3c6, transparent: true, opacity: 0.14, depthWrite: false, blending: ADD });
+  const litM = new THREE.MeshBasicMaterial({ color: 0xffb3c6, transparent: true, opacity: 0.85, depthWrite: false, blending: ADD });
+  scene.add(new THREE.Mesh(tubeFaint, faintM), new THREE.Mesh(tubeLit, litM));
+  const tubeCount = tubeLit.index.count;
+  const nodeSprites = rp.map(p => {
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffb3c6, transparent: true, opacity: 0.8, depthWrite: false, blending: ADD }));
+    s.position.copy(p); s.scale.set(0.6, 0.6, 1); scene.add(s); return s;
+  });
+
+  /* ---- the heart ---- */
+  const HN = isMobile ? 5000 : 9000, hp = new Float32Array(HN * 3);
+  for (let i = 0; i < HN; i++) {
+    const t = Math.random() * 6.2832, s = Math.sqrt(Math.random());
+    const hx = 16 * Math.pow(Math.sin(t), 3), hy = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    const z = (Math.random() < 0.5 ? -1 : 1) * Math.sqrt(Math.max(0, 1 - s * s)) * 6 + (Math.random() - 0.5) * 0.5;
+    hp[i * 3] = hx * s * 0.085 + (Math.random() - 0.5) * 0.02; hp[i * 3 + 1] = (hy * s + 2.5) * 0.085; hp[i * 3 + 2] = z * 0.085;
+  }
+  const hg = new THREE.BufferGeometry(); hg.setAttribute('position', new THREE.BufferAttribute(hp, 3));
+  const heartM = new THREE.PointsMaterial({ size: 0.042, map: glowTex, transparent: true, opacity: 0.95, depthWrite: false, blending: ADD, color: 0xffb3c6, fog: false });
+  const heartGlows = [];
+  function makeHeart() {
+    const g = new THREE.Group(); g.add(new THREE.Points(hg, heartM));
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffb3c6, transparent: true, opacity: 0.5, depthWrite: false, blending: ADD, fog: false }));
+    s.scale.set(5.4, 5.4, 1); g.add(s); heartGlows.push(s.material); scene.add(g); return g;
+  }
+  const heartHero = makeHeart();
+
+  /* ---- a house made of light: "home" ---- */
+  const house = new THREE.Group(); scene.add(house);
+  const lineM = new THREE.LineBasicMaterial({ color: 0xffd9a0, transparent: true, opacity: 0.95, blending: ADD, depthWrite: false, fog: false });
+  house.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2, 1.4, 1.6)), lineM));
+  const roofG = new THREE.ConeGeometry(1.58, 1.0, 4); roofG.rotateY(Math.PI / 4);
+  const roof = new THREE.LineSegments(new THREE.EdgesGeometry(roofG), lineM); roof.position.y = 1.2; roof.scale.z = 0.82; house.add(roof);
+  const warmM = new THREE.MeshBasicMaterial({ color: new THREE.Color(2.2, 1.5, 0.6), side: THREE.DoubleSide, fog: false });
+  const door = new THREE.Mesh(new THREE.PlaneGeometry(0.38, 0.72), warmM); door.position.set(0, -0.34, 0.805); house.add(door);
+  [-0.58, 0.58].forEach(x => { const w = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.42), warmM); w.position.set(x, 0.15, 0.805); house.add(w); });
+  [[0, -0.34, 0.9], [-0.58, 0.15, 0.9], [0.58, 0.15, 0.9]].forEach(p => {
+    const g = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffb060, transparent: true, opacity: 0.6, depthWrite: false, blending: ADD, fog: false }));
+    g.position.set(p[0], p[1], p[2]); g.scale.set(1.5, 1.5, 1); house.add(g);
+  });
+  const miniHeartM = new THREE.SpriteMaterial({ map: heartTex, color: 0xff7a9c, transparent: true, depthWrite: false, blending: ADD, fog: false });
+  const miniHeart = new THREE.Sprite(miniHeartM); miniHeart.position.set(-0.58, 0.15, 0.83); miniHeart.scale.set(0.3, 0.3, 1); house.add(miniHeart);
+  const hr = new THREE.Mesh(new THREE.RingGeometry(1.78, 1.8, 96), new THREE.MeshBasicMaterial({ color: 0xffd9a0, transparent: true, opacity: 0.5, side: THREE.DoubleSide, blending: ADD, depthWrite: false, fog: false }));
+  hr.rotation.x = -Math.PI / 2; hr.position.y = -0.7; house.add(hr);
+  const hsp = new Float32Array(700 * 3);
+  for (let i = 0; i < 700; i++) {
+    const fc = Math.floor(Math.random() * 4); let x = (Math.random() - 0.5) * 2, y = (Math.random() - 0.5) * 1.4, z = (Math.random() - 0.5) * 1.6;
+    if (fc === 0) z = 0.8; else if (fc === 1) z = -0.8; else if (fc === 2) x = 1; else x = -1;
+    hsp[i * 3] = x; hsp[i * 3 + 1] = y; hsp[i * 3 + 2] = z;
+  }
+  const hsg = new THREE.BufferGeometry(); hsg.setAttribute('position', new THREE.BufferAttribute(hsp, 3));
+  house.add(new THREE.Points(hsg, new THREE.PointsMaterial({ size: 0.035, map: glowTex, color: 0xffd9a0, transparent: true, opacity: 0.8, depthWrite: false, blending: ADD, fog: false })));
+  house.visible = false;
+
+  /* ---- gold frame material ---- */
+  const frameMat = new THREE.MeshStandardMaterial({ color: 0xdcb56a, metalness: 1, roughness: 0.22, envMapIntensity: 1.5 });
+  const matteMat = new THREE.MeshBasicMaterial({ color: 0x0a0806 });
+  const glowMats = [], photoMats = [];
+  const loader = new THREE.TextureLoader();
+
+  function makePhoto(idx) {
+    const r = CONFIG.ratios[idx], g = new THREE.Group();
+    const m = new THREE.MeshBasicMaterial({ color: 0x1a1a22, toneMapped: false });
+    const im = new Image();
+    im.onload = function () {
+      const tex = new THREE.Texture(im);
+      tex.encoding = THREE.sRGBEncoding; tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false; tex.needsUpdate = true;
+      m.map = tex; m.color.set(0xffffff); m.needsUpdate = true;
+    };
+    im.onerror = function () { fillFallback(); };
+    im.src = SRC(idx);
+    const img = new THREE.Mesh(new THREE.PlaneGeometry(r, 1), m); img.position.z = 0.027;
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(r + 0.1, 1.1, 0.05), frameMat);
+    const matte = new THREE.Mesh(new THREE.PlaneGeometry(r + 0.045, 1.045), matteMat); matte.position.z = 0.0255;
+    const gm = new THREE.SpriteMaterial({ map: glowTex, color: 0xffb3c6, transparent: true, opacity: 0.3, depthWrite: false, blending: ADD });
+    const glow = new THREE.Sprite(gm); glow.scale.set(r * 2.4, 1.9, 1); glow.position.z = -0.15; glowMats.push(gm);
+    photoMats[idx] = m;
+    g.add(glow, frame, matte, img); g.userData.r = r; return g;
+  }
+
+  /* photo layouts: [x, y, z, rotY, rotZ] per photo; mw/mh = max width/height */
+  const LAYOUT = {
+    d: { 1: { mw: 3.4, mh: 3.7, p: [[0, 0, 0, -0.2, 0.02]] },
+         2: { mw: 2.7, mh: 3.0, p: [[-0.8, 0.5, 0.2, -0.15, 0.05], [0.85, -0.5, -0.3, -0.25, -0.06]] },
+         3: { mw: 2.4, mh: 2.6, p: [[-0.95, 0.6, 0.1, -0.1, 0.04], [0.95, 0.4, -0.1, -0.2, -0.05], [0, -0.8, 0.3, -0.15, 0.02]] } },
+    m: { 1: { mw: 1.9, mh: 2.6, p: [[0, 0, 0, 0, 0.02]] },
+         2: { mw: 1.15, mh: 2.1, p: [[-0.6, 0.1, 0.1, 0.1, 0.04], [0.6, -0.1, -0.1, -0.1, -0.05]] },
+         3: { mw: 1.0, mh: 1.55, p: [[-0.65, 0.4, 0.1, 0.1, 0.04], [0.65, 0.35, -0.1, -0.1, -0.05], [0, -0.5, 0.3, 0, 0.02]] } }
+  };
+  const photoChapters = [];
+  CONFIG.chapters.forEach((c, idx) => {
+    const i = idx + 1; if (!c.photos || !c.photos.length) return;
+    const g = new THREE.Group(); scene.add(g);
+    const items = c.photos.map(p => { const ph = makePhoto(p); g.add(ph); return ph; });
+    photoChapters.push({ i: i, g: g, items: items, side: i % 2 ? 1 : -1 });
+  });
+  const babuIdx = CONFIG.chapters.findIndex(c => !c.photos || !c.photos.length) + 1;
+
+  /* ===== the payoff: every photo flies in and forms one heart ===== */
+  const pheart = new THREE.Group(); scene.add(pheart); pheart.visible = false;
+  const phSlots = [];
+  (function () {
+    const NP = CONFIG.ratios.length, pts = [], cum = [0];
+    for (let i = 0; i <= 600; i++) {
+      const t = i / 600 * Math.PI * 2;
+      pts.push([16 * Math.pow(Math.sin(t), 3), 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)]);
+      if (i) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+    }
+    const total = cum[600];
+    for (let k = 0; k < NP; k++) {
+      if (!photoMats[k]) continue;
+      const target = (k + 0.5) / NP * total; let j = 1; while (j < 600 && cum[j] < target) j++;
+      const a = pts[j - 1], b = pts[j], u = (target - cum[j - 1]) / Math.max(1e-6, cum[j] - cum[j - 1]);
+      const x = a[0] + (b[0] - a[0]) * u, y = a[1] + (b[1] - a[1]) * u, r = CONFIG.ratios[k], g = new THREE.Group();
+      const img = new THREE.Mesh(new THREE.PlaneGeometry(r, 1), photoMats[k]); img.position.z = 0.027;
+      const matte = new THREE.Mesh(new THREE.PlaneGeometry(r + 0.045, 1.045), matteMat); matte.position.z = 0.0255;
+      g.add(new THREE.Mesh(new THREE.BoxGeometry(r + 0.1, 1.1, 0.05), frameMat), matte, img);
+      g.scale.setScalar(1.5); g.visible = false; pheart.add(g);
+      phSlots.push({ g: g, tx: x * 0.285, ty: (y + 2.5) * 0.285, tz: (k % 2 ? 0.2 : -0.2), rz: Math.sin(k * 7.3) * 0.12, d: k * 0.14 });
+    }
+  })();
+  const heartBig = makeHeart(); heartBig.children[1].scale.set(2.4, 2.4, 1); heartBig.visible = false;
+
+  /* ===================== the cake ===================== */
+  const cake = new THREE.Group(); scene.add(cake);
+  const glassM = new THREE.MeshPhysicalMaterial({ color: 0x0b0e14, metalness: 0.55, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 1.3 });
+  const goldM = new THREE.MeshStandardMaterial({ color: 0xd8a24a, metalness: 1, roughness: 0.22, envMapIntensity: 1.4 });
+  const goldGlowM = new THREE.MeshBasicMaterial({ color: new THREE.Color(2.4, 1.6, 0.6) });
+  const addCyl = (r1, r2, h, y, m) => { const o = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, 72), m); o.position.y = y; cake.add(o); };
+  const addRing = (r, y) => { const o = new THREE.Mesh(new THREE.TorusGeometry(r, 0.012, 8, 120), goldGlowM); o.rotation.x = Math.PI / 2; o.position.y = y; cake.add(o); };
+  addCyl(1.1, 1.25, 0.14, 0.07, glassM); addRing(1.2, 0.145);
+  addCyl(0.95, 0.95, 0.55, 0.42, glassM); addRing(0.95, 0.7); addRing(0.95, 0.15);
+  addCyl(0.68, 0.68, 0.45, 1.0, glassM); addRing(0.68, 1.225);
+  addCyl(0.42, 0.42, 0.38, 1.445, glassM); addRing(0.42, 1.635);
+  const flames = [];
+  for (let i = 0; i < 5; i++) {
+    const a = i / 5 * Math.PI * 2, x = Math.cos(a) * 0.27, z = Math.sin(a) * 0.27;
+    const cd = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.4, 16), goldM); cd.position.set(x, 1.835, z); cake.add(cd);
+    const fl = new THREE.Sprite(new THREE.SpriteMaterial({ map: flameTex, transparent: true, depthWrite: false, blending: ADD }));
+    fl.position.set(x, 2.14, z); cake.add(fl); flames.push(fl);
+  }
+  (function () {   /* gold heart topper */
+    const sh = new THREE.Shape();
+    for (let i = 0; i <= 60; i++) {
+      const t = i / 60 * Math.PI * 2, x = 16 * Math.pow(Math.sin(t), 3), y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+      if (i) sh.lineTo(x, y); else sh.moveTo(x, y);
+    }
+    const geo = new THREE.ExtrudeGeometry(sh, { depth: 5, bevelEnabled: true, bevelThickness: 1.4, bevelSize: 1.2, bevelSegments: 3 });
+    geo.center(); geo.scale(0.013, 0.013, 0.013);
+    const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xe0ac55, metalness: 1, roughness: 0.2, emissive: 0x663300, emissiveIntensity: 0.35, envMapIntensity: 1.4 }));
+    m.position.set(0, 1.78 + 0.13, 0); m.visible = false; cake.add(m); cake.userData.topper = m;
+  })();
+  const candleLight = new THREE.PointLight(0xffb35c, 1.0, 5); candleLight.position.set(0, 2.2, 0); cake.add(candleLight);
+
+  /* floor under the cake: polar grid */
+  const floorM = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: ADD,
+    uniforms: { uColor: { value: new THREE.Color() }, uAlpha: { value: 0 } },
+    vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+    fragmentShader: [
+      'uniform vec3 uColor; uniform float uAlpha; varying vec2 vP;',
+      'void main(){',
+      '  float r = length(vP); float a = atan(vP.y, vP.x);',
+      '  float d = fract(r*2.0); d = min(d, 1.0-d) * 0.5;',
+      '  float ring = 1.0 - smoothstep(0.0, 0.006, d);',
+      '  float s = a / 6.2831853 * 64.0; float ds = min(fract(s), 1.0-fract(s));',
+      '  float spoke = (1.0 - smoothstep(0.0, 0.006, ds * (6.2831853*r/64.0))) * smoothstep(1.2, 2.0, r);',
+      '  float fade = smoothstep(6.0, 1.2, r); float pool = exp(-r*r*.3);',
+      '  float al = clamp((ring*.5 + spoke*.28)*fade*.55 + pool*.2, 0.0, 1.0) * uAlpha;',
+      '  gl_FragColor = vec4(uColor * (1.0 + pool), al);',
+      '}'
+    ].join('\n')
+  });
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(6, 96), floorM); floor.rotation.x = -Math.PI / 2; scene.add(floor);
+
+  /* ===================== fireworks (with hearts) ===================== */
+  const FW = 2400, fwP = new Float32Array(FW * 3), fwC = new Float32Array(FW * 3), fwB = new Float32Array(FW * 3), fwV = new Float32Array(FW * 3), fwL = new Float32Array(FW), fwD = new Float32Array(FW);
+  for (let i = 0; i < FW; i++) fwP[i * 3 + 1] = -999;
+  const fwGeo = new THREE.BufferGeometry();
+  fwGeo.setAttribute('position', new THREE.BufferAttribute(fwP, 3)); fwGeo.setAttribute('color', new THREE.BufferAttribute(fwC, 3));
+  const fwPts = new THREE.Points(fwGeo, new THREE.PointsMaterial({ size: 0.17, map: glowTex, vertexColors: true, transparent: true, depthWrite: false, blending: ADD, fog: false }));
+  fwPts.frustumCulled = false; scene.add(fwPts);
+  let fwHead = 0, fwAny = false, flash = 0;
+  function spawn(x, y, z, vx, vy, vz, col, dur) {
+    const i = fwHead++ % FW;
+    fwV[i * 3] = vx; fwV[i * 3 + 1] = vy; fwV[i * 3 + 2] = vz; fwP[i * 3] = x; fwP[i * 3 + 1] = y; fwP[i * 3 + 2] = z;
+    fwL[i] = 1; fwD[i] = dur; fwB[i * 3] = col[0]; fwB[i * 3 + 1] = col[1]; fwB[i * 3 + 2] = col[2]; fwAny = true;
+  }
+  function burstAt(x, y, z, col) {
+    for (let k = 0; k < 220; k++) {
+      const u = Math.random() * 2 - 1, th = Math.random() * 6.283, s = Math.sqrt(1 - u * u), sp2 = 1.6 + Math.random() * 2.6;
+      spawn(x, y, z, s * Math.cos(th) * sp2, u * sp2 + 0.4, s * Math.sin(th) * sp2, col, 1.1 + Math.random() * 0.9);
+    }
+  }
+  function heartBurst(x, y, z, col) {
+    for (let k = 0; k < 260; k++) {
+      const t = Math.random() * 6.283, hx = 16 * Math.pow(Math.sin(t), 3), hy = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t), sc = 0.17 * (0.4 + Math.random() * 0.6);
+      spawn(x, y, z, hx * sc, (hy + 2) * sc, (Math.random() - 0.5) * 0.6, col, 1.5 + Math.random() * 0.9);
+    }
+  }
+  fire = function () {
+    flash = 1;
+    const cols = [[1, 0.85, 0.45], [1, 0.93, 0.75], [1, 1, 1], [1, 0.78, 0.55], [1, 0.7, 0.3]];
+    const cp = cake.position, sx = isMobile ? 1.4 : 3.6, y0 = cp.y + (isMobile ? 3.4 : 2.2);
+    for (let i = 0; i < 11; i++) {
+      setTimeout(function () {
+        const x = cp.x + (Math.random() * 2 - 1) * sx, y = y0 + Math.random() * 1.8, z = cp.z + (Math.random() - 0.5) * 3;
+        if (i % 3 === 1) heartBurst(x, y, z, [1, 0.72, 0.6]); else burstAt(x, y, z, cols[i % cols.length]);
+        flash = 0.6;
+      }, i * 380);
+    }
+  };
+  function updateFireworks(dt) {
+    if (!fwAny) return;
+    let alive = false;
+    for (let i = 0; i < FW; i++) {
+      if (fwL[i] > 0) {
+        alive = true; fwL[i] -= dt / fwD[i];
+        const drag = 1 - dt * 1.4;
+        fwV[i * 3] *= drag; fwV[i * 3 + 1] = fwV[i * 3 + 1] * drag - dt * 1.8; fwV[i * 3 + 2] *= drag;
+        fwP[i * 3] += fwV[i * 3] * dt; fwP[i * 3 + 1] += fwV[i * 3 + 1] * dt; fwP[i * 3 + 2] += fwV[i * 3 + 2] * dt;
+        const a = Math.pow(Math.max(fwL[i], 0), 1.4) * 1.6;
+        fwC[i * 3] = fwB[i * 3] * a; fwC[i * 3 + 1] = fwB[i * 3 + 1] * a; fwC[i * 3 + 2] = fwB[i * 3 + 2] * a;
+      } else if (fwP[i * 3 + 1] > -900) { fwP[i * 3 + 1] = -999; fwC[i * 3] = fwC[i * 3 + 1] = fwC[i * 3 + 2] = 0; }
+    }
+    fwGeo.attributes.position.needsUpdate = true; fwGeo.attributes.color.needsUpdate = true;
+    if (!alive) fwAny = false;
+  }
+
+  /* ===================== input / resize ===================== */
+  const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+  window.addEventListener('pointermove', e => { mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = -(e.clientY / innerHeight * 2 - 1); }, { passive: true });
+  onResize3D = function () {
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    floatM.uniforms.uPR.value = renderer.getPixelRatio();
+  };
+  onResize3D();
+
+  /* ===================== per-frame ===================== */
+  const LAST = NS - 1;
+  let flameK = 1, blownAt = -1;
+
+  render3D = function (f, t, dt) {
+    mouse.x += (mouse.tx - mouse.x) * 0.05; mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+    /* accent drives every glow */
+    const ac = M('accent', f); accCol.setRGB(ac[0] / 255, ac[1] / 255, ac[2] / 255);
+    faintM.color.copy(accCol); litM.color.copy(accCol); floorM.uniforms.uColor.value.copy(accCol); floatM.uniforms.uColor.value.copy(accCol);
+    heartM.color.copy(accCol); heartGlows.forEach(m => m.color.copy(accCol)); glowMats.forEach(m => m.color.copy(accCol));
+    nodeSprites.forEach(s => s.material.color.copy(accCol));
+    rim.color.copy(accCol).lerp(new THREE.Color(0xffffff), 0.4);
+
+    /* camera flight */
+    const cx = S(CX, f), cy = S(CY, f), cz = S(CZ, f);
+    camera.position.set(cx + mouse.x * 0.35, cy + mouse.y * 0.2, cz);
+    camera.lookAt(cx * 0.6 + mouse.x * 0.8, cy - 0.1 + mouse.y * 0.1, cz - 10);
+    key.position.set(cx - 4, cy + 6, cz + 6); key.target.position.set(cx, cy, cz - 8);
+    rim.position.set(cx + 5, cy + 3.5, cz - 14); rim.target.position.set(cx, cy, cz - 7);
+    floaters.position.set(cx, cy, cz); floatM.uniforms.uTime.value = t;
+    stars.position.z = 0;
+
+    /* lit portion of the path */
+    litM.opacity = 0.85;
+    tubeLit.setDrawRange(0, Math.max(3, Math.floor(tubeCount * clamp(f / LAST) / 3) * 3));
+
+    /* photos */
+    const lay = isMobile ? LAYOUT.m : LAYOUT.d;
+    photoChapters.forEach(pc => {
+      const show = Math.abs(f - pc.i) < 1.7; pc.g.visible = show; if (!show) return;
+      const l = lay[pc.items.length];
+      pc.g.position.set(CX[pc.i] + (isMobile ? 0 : pc.side * 2.0), CY[pc.i] + (isMobile ? 0.95 : 0.12) + Math.sin(t * 0.7 + pc.i) * 0.05, CZ[pc.i] - 7.5);
+      pc.items.forEach((it, k) => {
+        const p = l.p[k], s = Math.min(l.mw / it.userData.r, l.mh);
+        it.scale.setScalar(s); it.position.set(p[0], p[1], p[2]);
+        it.rotation.set(0, (isMobile ? p[3] : p[3] * pc.side) + mouse.x * 0.1, p[4]);
+      });
+    });
+
+    /* hearts */
+    const beat = 1 + Math.pow(Math.abs(Math.sin(t * 1.6)), 14) * 0.09;
+    heartHero.visible = f < 1.6;
+    heartHero.position.set(CX[0], CY[0] + (isMobile ? 1.3 : 1.05), CZ[0] - 6);
+    heartHero.scale.setScalar((isMobile ? 0.62 : 0.85) * beat); heartHero.rotation.y = t * 0.35;
+    const hv = Math.abs(f - babuIdx) < 1.7; house.visible = hv;
+    if (hv) {
+      house.position.set(CX[babuIdx] + (isMobile ? 0 : (babuIdx % 2 ? 1 : -1) * 2.0), CY[babuIdx] + (isMobile ? 0.6 : -0.25), CZ[babuIdx] - 7.5);
+      house.scale.setScalar(isMobile ? 0.6 : 1.15); house.rotation.y = -0.25 + Math.sin(t * 0.5) * 0.45;
+      const wb = 0.75 + (beat - 1) * 3.5; warmM.color.setRGB(2.2 * wb, 1.5 * wb, 0.6 * wb);
+      miniHeart.scale.setScalar(0.3 * beat);
+    }
+
+    /* cake + floor */
+    const cv = sm(clamp((f - (LAST - 0.8)) / 0.8));
+    cake.visible = cv > 0.01;
+    const cs = (isMobile ? 0.85 : 1.2) * Math.max(cv, 0.001);
+    cake.scale.setScalar(cs);
+    cake.position.set(CX[LAST], CY[LAST] - (isMobile ? 0.9 : 1.45), CZ[LAST] - 8.2);
+    cake.rotation.y = -0.3 + Math.sin(t * 0.4) * 0.12 + t * 0.12;
+    cake.userData.topper.visible = true; cake.userData.topper.rotation.y = t * 0.8;
+    floor.position.set(cake.position.x, cake.position.y + 0.004, cake.position.z); floorM.uniforms.uAlpha.value = cv;
+    flameK += ((blown ? 0 : 1) - flameK) * (1 - Math.exp(-dt * 8));
+    const fk = 1 + Math.sin(t * 14) * 0.08 + Math.sin(t * 23) * 0.05;
+    flames.forEach((fl, i) => { fl.visible = flameK > 0.02; fl.scale.set(0.2 * flameK, 0.42 * flameK * fk * (1 + (i % 2) * 0.06), 1); });
+    candleLight.intensity = 1.0 * flameK * fk * cv;
+
+    /* the heart of photos */
+    if (blown && blownAt < 0) blownAt = t;
+    const tt = blownAt < 0 ? -1 : t - blownAt;
+    pheart.visible = tt >= 0; heartBig.visible = tt >= 2.4;
+    if (tt >= 0) {
+      const ps = isMobile ? 0.46 : 1, hb = 1 + (tt > 4 ? Math.pow(Math.abs(Math.sin(t * 1.6)), 14) * 0.03 : 0);
+      pheart.position.set(CX[LAST], CY[LAST] + (isMobile ? 1.9 : 1.1), CZ[LAST] - (isMobile ? 12 : 14));
+      pheart.scale.setScalar(ps * hb);
+      const sx0 = (cake.position.x - pheart.position.x) / ps, sy0 = (cake.position.y + 2.2 - pheart.position.y) / ps, sz0 = (cake.position.z - pheart.position.z) / ps;
+      phSlots.forEach(sl => {
+        const q = clamp((tt - 1.0 - sl.d) / 1.9), e = 1 - Math.pow(1 - q, 3), g = sl.g;
+        g.visible = q > 0;
+        if (q > 0) {
+          const arc = Math.sin(e * Math.PI);
+          g.position.set(sx0 + (sl.tx - sx0) * e, sy0 + (sl.ty - sy0) * e + arc * 1.2, sz0 + (sl.tz - sz0) * e + arc * 2.5);
+          g.scale.setScalar(0.2 + 1.3 * e); g.rotation.z = (1 - e) * 5 + sl.rz * e;
+        }
+      });
+      const hp = sm(clamp((tt - 2.4) / 2));
+      heartBig.position.copy(pheart.position); heartBig.position.z -= 0.6;
+      heartBig.scale.setScalar(ps * 3.3 * Math.max(hp, 0.001)); heartBig.rotation.y = Math.sin(t * 0.4) * 0.4;
+    }
+
+    updateFireworks(dt);
+    flash *= Math.pow(0.04, dt);
+    rim.intensity = 2.2 + flash * 4;
+
+    renderer.render(scene, camera);
+  };
+}
+
+/* ---------- fallback: show photos as normal pictures if 3D or a texture fails ---------- */
+let fbDone = false;
+function fillFallback() {
+  if (fbDone) return; fbDone = true; html.classList.add('photofail');
+  document.querySelectorAll('.chapter').forEach((sec, k) => {
+    const ph = CONFIG.chapters[k].photos || [];
+    if (ph.length) $('.block', sec).insertAdjacentHTML('beforeend', '<div class="fb">' + ph.map(p => '<img src="' + SRC(p) + '" alt="" loading="lazy">').join('') + '</div>');
+  });
+}
+
+/* ---------- boot ---------- */
+function onResize() { isMobile = innerWidth < 800; onResize3D(); measure(); lastUI = -9; }
+let rzT; window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(onResize, 120); });
+
+try {
+  if (typeof THREE === 'undefined') throw new Error('three.js not loaded');
+  init3D();
+} catch (err) {
+  console.warn('3D disabled:', err); html.classList.add('no3d'); render3D = null;
+  fillFallback();
+}
+
+measure();
+let fS = 0, last = performance.now();
+function loop(now) {
+  requestAnimationFrame(loop);
+  const dt = Math.min((now - last) / 1000, 0.05); last = now;
+  fS += (getF() - fS) * (1 - Math.exp(-dt * 6));
+  applyUI(fS);
+  if (render3D) render3D(fS, now / 1000, dt);
+}
+requestAnimationFrame(loop);
+window.addEventListener('load', measure);
+
+const done = () => html.classList.add('loaded');
+if (document.readyState === 'complete') setTimeout(done, 600); else window.addEventListener('load', () => setTimeout(done, 600));
+setTimeout(done, 4500);
+})();
+</script>
+</body>
+</html>
